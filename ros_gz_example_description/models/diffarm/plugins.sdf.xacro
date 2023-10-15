@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<sdf version="1.8" xmlns:xacro="http://ros.org/wiki/xacro">
+<sdf version="1.9" xmlns:xacro="http://ros.org/wiki/xacro">
     <plugin
         filename="gz-sim-physics-system"
         name="gz::sim::systems::Physics">

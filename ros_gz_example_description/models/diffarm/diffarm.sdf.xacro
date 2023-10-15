@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<sdf version="1.8" xmlns:xacro="http://ros.org/wiki/xacro">
+<sdf version="1.9" xmlns:xacro="http://ros.org/wiki/xacro">
     <model name="diffarm" canonical_link="chassis">
 
         <xacro:property name="wheel_radius" value="0.4"/>
@@ -7,6 +7,7 @@
         <xacro:property name="chassis_x" value="2.0"/>
         <xacro:property name="chassis_y" value="1.0"/>
         <xacro:property name="chassis_z" value="0.5"/>
+        <xacro:property name="caster_radius" value="${wheel_radius/2}"/>
 
         <plugin
             filename="gz-sim-diff-drive-system"
@@ -158,7 +159,7 @@
 
 <!-- caster wheel -->
         <frame name="caster_frame" attached_to='chassis'>
-            <pose>0.8 0 -${wheel_radius/2} 0 0 0</pose>
+            <pose>${chassis_y-caster_radius} 0 -${caster_radius} 0 0 0</pose>
         </frame>
 
         <link name='caster'>
@@ -177,7 +178,7 @@
             <visual name='visual'>
                 <geometry>
                     <sphere>
-                        <radius>${wheel_radius/2}</radius>
+                        <radius>${caster_radius}</radius>
                     </sphere>
                 </geometry>
                 <material>
@@ -189,7 +190,7 @@
             <collision name='collision'>
                 <geometry>
                     <sphere>
-                        <radius>${wheel_radius/2}</radius>
+                        <radius>${caster_radius}</radius>
                     </sphere>
                 </geometry>
             </collision>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- this from "https://gazebosim.org/docs/garden/moving_robot" -->
-<sdf version="1.8" xmlns:xacro="http://ros.org/wiki/xacro">
+<sdf version="1.9" xmlns:xacro="http://ros.org/wiki/xacro">
     <world name="car_world">
         <physics name="1ms" type="ignored">
             <max_step_size>0.001</max_step_size>
