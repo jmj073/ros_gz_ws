@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<sdf version="1.9" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="wheel_link" params="prefix x y">
+
+      <link name='${prefix}_wheel'>
+        <pose relative_to="chassis">${x} ${y} 0 -1.5707 0 0</pose>
+          <inertial>
+              <mass>1</mass>
+              <inertia>
+                  <ixx>0.043333</ixx>
+                  <ixy>0</ixy>
+                  <ixz>0</ixz>
+                  <iyy>0.043333</iyy>
+                  <iyz>0</iyz>
+                  <izz>0.08</izz>
+              </inertia>
+          </inertial>
+          <visual name='visual'>
+            <geometry>
+                <cylinder>
+                    <radius>${wheel_radius}</radius>
+                    <length>${wheel_length}</length>
+                </cylinder>
+            </geometry>
+            <material>
+                <ambient>1.0 0.0 0.0 1</ambient>
+                <diffuse>1.0 0.0 0.0 1</diffuse>
+                <specular>1.0 0.0 0.0 1</specular>
+            </material>
+          </visual>
+          <collision name='collision'>
+              <geometry>
+                  <cylinder>
+                      <radius>${wheel_radius}</radius>
+                      <length>${wheel_length}</length>
+                  </cylinder>
+              </geometry>
+          </collision>
+      </link>
+
+    </xacro:macro> <!-- wheel_link -->
+
+    <xacro:macro name="wheel_joint" params="prefix">
+        <joint name='${prefix}_wheel_joint' type='continuous'>
+            <pose relative_to='${prefix}_wheel'/>
+            <parent>chassis</parent>
+            <child>${prefix}_wheel</child>
+            <axis>
+                <xyz expressed_in='__model__'>0 1 0</xyz>
+                <!-- <limit>
+                    <lower>-1.79769e+308</lower>
+                    <upper>1.79769e+308</upper>
+                </limit> -->
+            </axis>
+        </joint>
+    </xacro:macro>  <!-- wheel_joint -->
+
+    <xacro:macro name="wheel" params="prefix x y">
+      <xacro:wheel_link prefix="${prefix}" x="${x}" y="${y}"/>
+      <xacro:wheel_joint prefix="${prefix}"/>
+    </xacro:macro>  <!-- wheel -->
+
+    <xacro:wheel prefix="left" x="-0.5" y="${(chassis_y+wheel_length)/2}"/>
+    <xacro:wheel prefix="right" x="-0.5" y="-${(chassis_y+wheel_length)/2}"/>
+
+</sdf>

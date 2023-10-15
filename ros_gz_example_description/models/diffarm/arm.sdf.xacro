@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<sdf version="1.9" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:property name="arm_base_radius" value="0.4"/>
+    <xacro:property name="arm_base_length" value="0.1"/>
+
+    <frame name="arm_base_frame" attached_to='chassis'>
+        <pose>0 0 ${(chassis_z+arm_base_length)/2} 0 0 0</pose>
+    </frame>
+
+      <link name='arm_base'>
+        <pose relative_to="arm_base_frame"/>
+          <inertial>
+              <mass>0.5</mass>
+              <inertia>
+                  <ixx>0.043333</ixx>
+                  <ixy>0</ixy>
+                  <ixz>0</ixz>
+                  <iyy>0.043333</iyy>
+                  <iyz>0</iyz>
+                  <izz>0.08</izz>
+              </inertia>
+          </inertial>
+          <visual name='visual'>
+            <geometry>
+                <cylinder>
+                    <radius>${arm_base_radius}</radius>
+                    <length>${arm_base_length}</length>
+                </cylinder>
+            </geometry>
+            <material>
+                <ambient>1.0 0.0 0.0 1</ambient>
+                <diffuse>1.0 0.0 0.0 1</diffuse>
+                <specular>1.0 0.0 0.0 1</specular>
+            </material>
+          </visual>
+          <collision name='collision'>
+              <geometry>
+                  <cylinder>
+                      <radius>${arm_base_radius}</radius>
+                      <length>${arm_base_length}</length>
+                  </cylinder>
+              </geometry>
+          </collision>
+      </link>
+
+      <joint name='arm_base_joint' type='continuous'>
+          <parent>chassis</parent>
+          <child>arm_base</child>
+          <axis>
+              <xyz expressed_in='__model__'>0 0 1</xyz>
+              <!-- <limit>
+                  <lower>-1.79769e+308</lower>
+                  <upper>1.79769e+308</upper>
+              </limit> -->
+          </axis>
+      </joint>
+
+      <xacro:macro name="arm_stick" params="prefix parent">
+          <link name='${prefix}'>
+              <pose relative_to="${parent}">0 0 0 0 -0 0</pose>
+              <inertial>
+                  <pose>0 0 1 0 0 0</pose>
+                  <mass>1</mass>
+                  <inertia>
+                      <ixx>0.334167</ixx>
+                      <ixy>0</ixy>
+                      <ixz>0</ixz>
+                      <iyy>0.334167</iyy>
+                      <iyz>0</iyz>
+                      <izz>0.00166667</izz>
+                  </inertia>
+              </inertial>
+              <collision name='${prefix}_collision'>
+                  <pose>0 0 1 0 -0 0</pose>
+                  <geometry>
+                      <box>
+                          <size>0.1 0.1 2</size>
+                      </box>
+                  </geometry>
+              </collision>
+              <visual name='${prefix}_visual'>
+                  <pose>0 0 1 0 -0 0</pose>
+                  <geometry>
+                      <box>
+                          <size>0.1 0.1 2</size>
+                      </box>
+                  </geometry>
+                  <material>
+                      <diffuse> 1 0.423529412 0.039215686 1</diffuse>
+                      <ambient> 1 0.423529412 0.039215686 1</ambient>
+                      <specular>1 0.423529412 0.039215686 1</specular>
+                  </material>
+              </visual>
+          </link>
+      </xacro:macro>
+
+    <joint name='joint1' type='continuous'>
+      <pose relative_to='link1'>0 0.1 1.95 0 -0 0</pose>
+      <parent>link1</parent>
+      <child>link2</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <dynamics>
+          <damping>0.7</damping>
+          <friction>0.0</friction>          
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+</sdf>
