@@ -23,7 +23,7 @@
         <xacro:include filename="diffarm/chassis.sdf.xacro"/>
         <xacro:include filename="diffarm/wheel.sdf.xacro"/>
         <xacro:include filename="diffarm/caster_wheel.sdf.xacro"/>
-        <xacro:include filename="arm.sdf.xacro"/>
+        <xacro:include filename="diffarm/arm.sdf.xacro"/>
 
     </model>
 </sdf>
